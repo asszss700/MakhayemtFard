@@ -17,18 +17,15 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             db = get_db()
-
             camps     = list(db.camps.find({},     {"_id": 0}))
             customers = list(db.customers.find({}, {"_id": 0}))
             bookings  = list(db.bookings.find({},  {"_id": 0}))
-
             self._send(200, {
                 "status":    "ok",
                 "camps":     camps,
                 "customers": customers,
                 "bookings":  bookings
             })
-
         except Exception as e:
             self._send(500, {"status": "error", "message": str(e)})
 
@@ -63,7 +60,6 @@ class handler(BaseHTTPRequestHandler):
                 "customers": len(customers),
                 "bookings":  len(bookings)
             })
-
         except Exception as e:
             self._send(500, {"status": "error", "message": str(e)})
 
